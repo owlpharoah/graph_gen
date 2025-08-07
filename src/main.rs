@@ -1,6 +1,6 @@
 // make a graph struct with vertice vector & edge vector(like pair in vector). create impl for functions to set these
 
-use std::collections::HashSet;
+use std::{collections::HashSet, process::exit};
 
 struct Graph{
     vertices: Vec<i32>,
@@ -54,16 +54,17 @@ fn make_edges(d: i32, g: &mut Graph) -> Option<HashSet<(i32,i32)>>{
 fn main(){
     let mut t = Graph::new();
     t.set_vertices(4);
-    let mut e = make_edges(2, &mut t);
-    e = match e{
-        Some(k) => Some(k),
-        None => {println!("Not a valid degree for the graph");None}
-    };
-    if e.is_some(){
-        println!("{:?}",t.return_edges());
-    }else{
-        return;
-    }
-    
+    let e = make_edges(10, &mut t);
+    // e = match e{
+    //     Some(k) => Some(k),
+    //     None => {println!("Not a valid degree for the graph");None}
+    // };
+    // if e.is_some(){
+    //     println!("{:?}",t.return_edges());
+    // }else{
+    //     return;
+    // }
+    e.unwrap_or_else(||{println!("Not a valid degree");exit(1)});
+    println!("Edges: {:?}",t.return_edges());
 
 }
